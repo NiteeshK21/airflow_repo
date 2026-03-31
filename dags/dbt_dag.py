@@ -23,24 +23,19 @@ with DAG(
     tags=['dbt', 'snowflake'],
 ) as dag:
 
-    dbt_deps = BashOperator(
-        task_id='dbt_deps',
-        bash_command=f'cd {DBT_PROJECT_DIR} && dbt deps --profiles-dir .',
-    )
-
     dbt_run_staging = BashOperator(
         task_id='dbt_run_staging',
-        bash_command=f'cd {DBT_PROJECT_DIR} && dbt run --select staging --profiles-dir .',
+        bash_command=f"cd {DBT_PROJECT_DIR} && dbt deps --profiles-dir . && dbt run --select staging --profiles-dir .",
     )
 
     dbt_run_marts = BashOperator(
         task_id='dbt_run_marts',
-        bash_command=f'cd {DBT_PROJECT_DIR} && dbt run --select marts --profiles-dir .',
+        bash_command=f"cd {DBT_PROJECT_DIR} && dbt deps --profiles-dir . && dbt run --select marts --profiles-dir .",
     )
 
     dbt_test = BashOperator(
         task_id='dbt_test',
-        bash_command=f'cd {DBT_PROJECT_DIR} && dbt test --profiles-dir .',
+        bash_command=f"cd {DBT_PROJECT_DIR} && dbt deps --profiles-dir . && dbt test --profiles-dir .",
     )
 
-    dbt_deps >> dbt_run_staging >> dbt_run_marts >> dbt_test
+    dbt_run_staging >> dbt_run_marts >> dbt_test

@@ -22,6 +22,9 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
+target-path: /opt/airflow/dbt_target/
+packages-install-path: /opt/airflow/dbt_packages/
+log-path: /opt/airflow/dbt_logs/
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
