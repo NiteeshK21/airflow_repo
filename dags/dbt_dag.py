@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 
-DBT_PROJECT_DIR = "/opt/airflow/dags/repo/dbt_project"
+DBT_PROJECT_DIR = "/opt/airflow/dags/repo/dags/dbt_project"
 
 default_args = {
     'owner': 'airflow',
